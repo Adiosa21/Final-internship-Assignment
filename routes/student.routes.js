@@ -10,8 +10,8 @@ module.exports = app => {
     router.post("/add", students_logic.create);
 
     // retrieve all students api route
-    // http://localhost:8085/students/r
-    router.get("/r", students_logic.retrieve_students);
+    // http://localhost:8005/students/retrieve
+    router.get("/retrieve", students_logic.retrieve_students);
     
     // get a specific student
     router.get("/:id", students_logic.retrieve_student);
@@ -20,13 +20,23 @@ module.exports = app => {
     router.get("/find/:physical_address", students_logic.find_students_by_location);
 
     // update students api route
-    router.put("/:id", students_logic.update_student); 
+    router.put("/update/:id", students_logic.update_student); 
 
-    // update students api route
-    router.delete("/delete/:id", students_logic.delete_student); 
+    // delete students api route
+    //router.delete("/delete/:id", students_logic.delete_student); 
+
+    // delete all students api route
+    router.delete("/deleteall", students_logic.deleteAllStudents);
+    
+    
+    // Add the route to count the number of students
+    router.get("/count",students_logic.count_students);
+
+
+
 
     // define default route
     app.use('/students', router);
 
 }
-// http://localhost:8082/students/add
+// http://localhost:8005/students/add

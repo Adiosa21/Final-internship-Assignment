@@ -178,3 +178,62 @@ exports.delete_student = (req, res) => {
         });
     });
 }; 
+
+
+// Implement the deleteAllStudents function
+exports.deleteAllStudents = (req, res) => {
+    Student.destroy({
+      where: {}, // Pass an empty object to delete all records
+      truncate: false // Set to true to truncate the table (delete all records and reset auto-increment)
+    })
+      .then(num => {
+        if (num > 0) {
+          res.send({
+            status: 100,
+            status_message: "Success",
+            message: "All students deleted successfully."
+          });
+        } else {
+          res.send({
+            status: 400,
+            status_message: "Error",
+            message: "No students found to delete."
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Error deleting all students: " + err.message
+        });
+      });
+  };
+
+
+// Implement the countStudents function
+exports.count_students = (req,res)=>{
+
+    Student.count({})
+        .then(num =>{
+            if(num > 0){
+                res.send({
+                    message: `the num of students is ${num}`,
+                    status: "success",
+                    status_code: 100
+                });
+            }
+            else {
+                res.send({
+                    message: "no records in the table",
+                    status: "error",
+                    status_code: 400
+                });
+            }
+        })
+        .catch(err=>{
+            res.send({
+                message:"error occured while counting students" || err.message,
+                status: "error",
+                status_code: 400
+            });
+        });
+};
